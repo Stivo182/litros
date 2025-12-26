@@ -1,26 +1,28 @@
 {
-  "litros": {
-      "ТокенGitHub": "",
-      "ИнтервалОбработкиОчереди": 60,
-      "ИнтервалПроверкиАктуальности": 300,
-      "СрокАктуальности": 86400
-  },
-  "winow": {
-      "ИмяХоста": "localhost",
-      "Порт": 3333
-  },
-  "logos": {
-      "logger": {
-          "rootLogger": {"level":"INFO", "appenders": "file, console"}
-      },
-      "appender": {
-        "file": {
-            "type": "ВыводЛогаВФайл",
-            "file": "./litros.log"
+    "litros": {
+        "ТокенGitHub": "",
+        "ИнтервалОбработкиОчереди": 60,
+        "ИнтервалПроверкиАктуальности": 300,
+        "СрокАктуальности": 86400
+    },
+    "winow": {
+        "ИмяХоста": "localhost",
+        "Порт": 3333
+    },
+    "logos": {
+        "logger": {
+            "rootLogger": {"level": "INFO", "appenders": "file, console"}
         },
-        "console": {
-            "type": "ВыводЛогаВКонсоль"
+        "appender": {
+            "file": {
+                "type": "ВыводЛогаВФайл",
+                "level": "INFO",
+                "file": "./litros.log"
+            },
+            "console": {
+                "type": "ВыводЛогаВКонсоль",        
+                "level": "INFO"
+            }
         }
-      }
-  }
+    }
 }
