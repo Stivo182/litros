@@ -524,10 +524,11 @@
         });
 
         window.addEventListener('DOMContentLoaded', function() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const packageName = urlParams.get('package');
+            const url = new URL(window.location.href);
+            const packageName = url.searchParams.get("package");
             
             if (packageName) {
+                history.replaceState({}, document.title, url.pathname);
                 document.getElementById('packageInput').value = packageName;
                 searchDependents();
             }
