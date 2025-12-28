@@ -376,14 +376,15 @@
                     displayedCount = 0;
                     displayBadge(packageName);
                     displayResults(packageName);
+                } else if (data.error) {
+                    throw new Error(data.error);
                 } else {
                     resultsDiv.innerHTML = `
                         <div class="empty">
-                            <h3>Репозитории не найдены</h3>
                             ${
                                 data.message
-                                    ? `<p>${data.message}</p>`
-                                    : `<p>Не удалось найти публичные репозитории, использующие пакет <strong>${packageName}</strong></p>`
+                                    ? `<h3>${data.message.replace(/\.(\s|$)/g, ".</br>")}</h3>`
+                                    : `<h3>Репозитории не найдены</strong></h3>`
                             }
                         </div>
                     `;
@@ -391,7 +392,7 @@
             } catch (error) {
                 resultsDiv.innerHTML = `
                     <div class="error">
-                        <strong>Ошибка:</strong> ${error.message}
+                        ${error.message}
                     </div>
                 `;
             } finally {
