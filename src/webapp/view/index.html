@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Litros - Library Tracker for OneScript</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f5f7fb;
+            min-height: 100vh;
+            padding: 32px 16px;
+            color: #1f2937;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: #ffffff;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            padding: 40px;
+        }
+
+        h1 {
+            color: #111827;
+            margin-bottom: 8px;
+            font-size: 2rem;
+        }
+
+        .subtitle {
+            color: #6b7280;
+            margin-bottom: 32px;
+            font-size: 0.95rem;
+        }
+
+        .search-box {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 32px;
+        }
+
+        input {
+            flex: 1;
+            padding: 14px 16px;
+            border: 1px solid #d1d5db;
+            border-radius: 10px;
+            font-size: 16px;
+            background: #ffffff;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #60a5fa;
+            box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.25);
+        }
+
+        button {
+            padding: 14px 28px;
+            background: #3b82f6;
+            color: #ffffff;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s, box-shadow 0.2s;
+        }
+
+        button:hover {
+            background: #2563eb;
+            box-shadow: 0 6px 16px rgba(59, 130, 246, 0.35);
+        }
+        
+        button:active {
+            transform: translateY(0);
+        }
+
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 48px 0;
+            color: #6b7280;
+        }
+
+        .spinner {
+            border: 3px solid #e5e7eb;
+            border-top: 3px solid #3b82f6;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .badge-container {
+            background: #f9fafb;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 24px;
+        }
+
+        .badge-preview {
+            text-align: center;
+            padding: 20px;
+            background: #ffffff;
+            border-radius: 8px;
+            margin-bottom: 16px;
+            border: 1px solid #e5e7eb;
+        }
+
+        .badge-preview img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .code-block {
+            background: #1f2937;
+            color: #e5e7eb;
+            padding: 16px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            position: relative;
+            margin-bottom: 12px;
+            overflow-x: auto;
+        }
+
+        .code-block code {
+            display: block;
+            white-space: pre;
+        }
+
+        .copy-btn {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            padding: 6px 12px;
+            background: #374151;
+            color: #ffffff;
+            border: none;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .copy-btn:hover {
+            background: #4b5563;
+        }
+
+        .copy-btn.copied {
+            background: #10b981;
+        }
+
+        .badge-formats {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .format-tab {
+            padding: 8px 16px;
+            background: #ffffff;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+        }
+
+        .format-tab:hover {
+            border-color: #3b82f6;
+        }
+
+        .format-tab.active {
+            background: #3b82f6;
+            color: #ffffff;
+            border-color: #3b82f6;
+        }
+        
+        .results {
+            margin-top: 30px;
+        }
+
+        .result-header {
+            background: #f9fafb;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+        }
+
+        .result-header h2 {
+            color: #111827;
+            margin-bottom: 4px;
+        }
+
+        .result-count {
+            color: #6b7280;
+            font-size: 0.9rem;
+        }
+
+        .repo-card {
+            border: 1px solid #e5e7eb;
+            border-radius: 14px;
+            padding: 20px;
+            margin-bottom: 16px;
+            background: #ffffff;
+            transition: box-shadow 0.25s, transform 0.25s;
+        }
+
+        .repo-card:hover {
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+            transform: translateY(-2px);
+        }
+
+        .repo-name {
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: #2563eb;
+            text-decoration: none;
+            display: inline-block;
+            margin-bottom: 6px;
+        }
+
+        .repo-name:hover {
+            text-decoration: underline;
+        }
+
+        .repo-description {
+            color: #374151;
+            margin-bottom: 12px;
+            line-height: 1.55;
+        }
+
+        .repo-meta {
+            display: flex;
+            gap: 20px;
+            font-size: 0.9rem;
+            color: #6b7280;
+        }
+        
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .error {
+            background: #fef2f2;
+            color: #b91c1c;
+            padding: 16px;
+            border-radius: 12px;
+            margin-top: 20px;
+        }
+
+        .empty {
+            text-align: center;
+            padding: 48px 0;
+            color: #6b7280;
+        }
+
+        .github-corner {
+            position: fixed;
+            top: 0;
+            right: 0;
+            border: 0;
+            z-index: 1000;
+        }
+
+        .github-corner svg {
+            fill: #111827;
+            color: #fff;
+            width: 80px;
+            height: 80px;
+        }
+
+        .github-corner:hover .octo-arm {
+            animation: octocat-wave 560ms ease-in-out;
+        }
+
+        @keyframes octocat-wave {
+            0%, 100% { transform: rotate(0); }
+            20%, 60% { transform: rotate(-25deg); }
+            40%, 80% { transform: rotate(10deg); }
+        }
+
+        @media (max-width: 768px) {
+            .github-corner svg {
+                width: 60px;
+                height: 60px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="https://github.com/alei1180/litros" class="github-corner" aria-label="View source on GitHub" target="_blank">
+        <svg viewBox="0 0 250 250" aria-hidden="true">
+            <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+            <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+            <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path>
+        </svg>
+    </a>
+
+    <div class="container">
+        <h1>Litros - Library Tracker for OneScript</h1>
+        <p class="subtitle">Найдите GitHub репозитории, которые используют OneScript пакет</p>
+        
+        <div class="search-box">
+            <input 
+                type="text" 
+                id="packageInput" 
+                placeholder="Введите название пакета"
+                autofocus
+            >
+            <button id="searchBtn" onclick="searchDependents()">Найти</button>
+        </div>
+
+        <div id="badge-section" style="display: none;"></div>
+
+        <div id="results"></div>
+    </div>
+
+    <script>
+        let allRepositories = [];
+        let displayedCount = 0;
+        const ITEMS_PER_PAGE = 10;
+        let currentFormat = 'markdown';
+
+         async function searchDependents() {
+            const packageName = document.getElementById('packageInput').value.trim();
+            const resultsDiv = document.getElementById('results');
+            const searchBtn = document.getElementById('searchBtn');
+            const badgeSection = document.getElementById('badge-section');
+
+            if (!packageName) {
+                resultsDiv.innerHTML = '<div class="error">Пожалуйста, введите название пакета</div>';
+                return;
+            }
+
+            searchBtn.disabled = true;
+            badgeSection.style.display = 'none';
+            resultsDiv.innerHTML = `
+                <div class="loading">
+                    <div class="spinner"></div>
+                    <p>Ищем репозитории, использующие <strong>${packageName}</strong>...</p>
+                </div>
+            `;
+
+            try {
+                const response = await fetch(`/${packageName}.json`);
+                
+                if (!response.ok) {
+                    throw new Error(`Ошибка: ${response.status}`);
+                }
+
+                const data = await response.json();
+                
+                if (data.repositories && data.repositories.length > 0) {
+                    allRepositories = data.repositories;
+                    displayedCount = 0;
+                    displayBadge(packageName);
+                    displayResults(packageName);
+                } else {
+                    resultsDiv.innerHTML = `
+                        <div class="empty">
+                            <h3>Репозитории не найдены</h3>
+                            ${
+                                data.message
+                                    ? `<p>${data.message}</p>`
+                                    : `<p>Не удалось найти публичные репозитории, использующие пакет <strong>${packageName}</strong></p>`
+                            }
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                resultsDiv.innerHTML = `
+                    <div class="error">
+                        <strong>Ошибка:</strong> ${error.message}
+                    </div>
+                `;
+            } finally {
+                searchBtn.disabled = false;
+            }
+        }
+
+       function displayBadge(packageName) {
+            const badgeSection = document.getElementById('badge-section');
+            const baseUrl = window.location.origin;
+            const badgeUrl = `${baseUrl}/${packageName}.svg`;
+            const linkUrl = `${baseUrl}/${packageName}`;
+
+            badgeSection.style.display = 'block';
+            badgeSection.innerHTML = `
+                <div class="badge-container">
+                    <div class="badge-preview">
+                        <a href="${linkUrl}" target="_blank">
+                            <img src="${badgeUrl}" alt="Used by">
+                        </a>
+                    </div>
+                    <div class="badge-formats">
+                        <div class="format-tab active" onclick="switchFormat('markdown')">Markdown</div>
+                        <div class="format-tab" onclick="switchFormat('html')">HTML</div>
+                    </div>
+                    <div id="code-container"></div>
+                </div>
+            `;
+            updateCodeBlock(packageName);
+        }
+
+       function switchFormat(format) {
+            currentFormat = format;
+            document.querySelectorAll('.format-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            const packageName = document.getElementById('packageInput').value.trim();
+            updateCodeBlock(packageName);
+        }
+
+        function updateCodeBlock(packageName) {
+            const baseUrl = window.location.origin;
+            const badgeUrl = `${baseUrl}/${packageName}.svg`;
+            const linkUrl = `${baseUrl}/${packageName}`;
+            const codeContainer = document.getElementById('code-container');
+
+            let code = '';
+            switch(currentFormat) {
+                case 'markdown':
+                    code = `[![Used by](${badgeUrl})](${linkUrl})`;
+                    break;
+                case 'html':
+                    code = `<a href="${linkUrl}">\n  <img src="${badgeUrl}" alt="Used by">\n</a>`;
+                    break;
+            }
+
+            codeContainer.innerHTML = `
+                <div class="code-block">
+                    <button class="copy-btn" onclick="copyCode(this)">Копировать</button>
+                    <code>${escapeHtml(code)}</code>
+                </div>
+            `;
+        }
+
+        function copyCode(button) {
+            const codeBlock = button.nextElementSibling;
+            const text = codeBlock.textContent;
+            
+            navigator.clipboard.writeText(text).then(() => {
+                const originalText = button.textContent;
+                button.textContent = 'Скопировано!';
+                button.classList.add('copied');
+                
+                setTimeout(() => {
+                    button.textContent = originalText;
+                    button.classList.remove('copied');
+                }, 2000);
+            });
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        function displayResults(packageName) {
+            const resultsDiv = document.getElementById('results');
+            const itemsToShow = allRepositories.slice(0, displayedCount + ITEMS_PER_PAGE);
+            displayedCount = itemsToShow.length;
+            const hasMore = displayedCount < allRepositories.length;
+
+            const repoCards = itemsToShow.map(repo => `
+                <div class="repo-card">
+                    <a href="${repo.url}" target="_blank" class="repo-name">
+                        ${repo.full_name}
+                    </a>
+                    ${repo.fork ? '<span style="display: inline-block; background: #f0f4ff; color: #5a67d8; padding: 2px 8px; border-radius: 4px; font-size: 0.85em; margin-left: 8px;">Fork</span>' : ''}
+                    <div class="repo-description">
+                        ${repo.description || 'Нет описания'}
+                    </div>
+                    <div class="repo-meta">
+                        <div class="meta-item">⭐ ${repo.stargazers_count || 0} stars</div>
+                        <div class="meta-item">🍴 ${repo.forks_count || 0} forks</div>
+                    </div>
+                </div>
+            `).join('');
+
+            resultsDiv.innerHTML = `
+                <div class="results">
+                    <div class="result-header">
+                        <h2>Найдено репозиториев: ${allRepositories.length}</h2>
+                        <p class="result-count">Показано: ${displayedCount} из ${allRepositories.length}</p>
+                    </div>
+                    ${repoCards}
+                    ${hasMore ? '<button onclick="loadMore()" style="width: 100%; margin-top: 10px;">Показать ещё</button>' : ''}
+                </div>
+            `;
+        }
+
+        function loadMore() {
+            displayResults();
+        }
+
+        document.getElementById('packageInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                searchDependents();
+            }
+        });
+
+        window.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const packageName = urlParams.get('package');
+            
+            if (packageName) {
+                document.getElementById('packageInput').value = packageName;
+                searchDependents();
+            }
+        });
+    </script>
+</body>
+</html>
