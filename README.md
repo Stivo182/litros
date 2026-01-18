@@ -16,3 +16,7 @@ Litros - трэкер библиотек OneScript на GitHub:
 
 - Показывает информацию об использовании библиотеки в других проектах OneScript на GitHub
 - Генерирует бэйджик о количестве использований для вставки в markdown файлы
+
+## Сайт
+
+[litrosbadges.ru](https://litrosbadges.ru/)
