@@ -1,6 +1,6 @@
 ![](img/litros-logo-horizontal.png)
 
-<h1 style="text-align:center;">Litros<br>Library Tracker for OneScript</br></h1>
+<h1 align="center">Litros<br>Library Tracker for OneScript</br></h1>
 
 <p align="center">
 <a href="https://github.com/alei1180/litros/blob/main/LICENSE"><img alt="License" src="https://img.shields.io/github/license/alei1180/litros?style=badge"></a>
