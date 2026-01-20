@@ -353,6 +353,11 @@
                 return;
             }
 
+            if (!/^[a-zA-Z0-9_-]+$/.test(packageName)) {
+                resultsDiv.innerHTML = '<div class="error">Недопустимые символы в названии пакета</div>';
+                return;
+            }
+
             searchBtn.disabled = true;
             badgeSection.style.display = 'none';
             resultsDiv.innerHTML = `
