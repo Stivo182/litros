@@ -368,7 +368,7 @@
             `;
 
             try {
-                const response = await fetch(`/${packageName}.json`);
+                const response = await fetch(`/package/${packageName}.json`);
                 
                 if (!response.ok) {
                     throw new Error(`Ошибка: ${response.status}`);
@@ -408,8 +408,8 @@
        function displayBadge(packageName) {
             const badgeSection = document.getElementById('badge-section');
             const baseUrl = window.location.origin;
-            const badgeUrl = `${baseUrl}/${packageName}.svg`;
-            const linkUrl = `${baseUrl}/${packageName}`;
+            const badgeUrl = `${baseUrl}/package/${packageName}.svg`;
+            const linkUrl = `${baseUrl}/package/${packageName}`;
 
             badgeSection.style.display = 'block';
             badgeSection.innerHTML = `
@@ -441,8 +441,8 @@
 
         function updateCodeBlock(packageName) {
             const baseUrl = window.location.origin;
-            const badgeUrl = `${baseUrl}/${packageName}.svg`;
-            const linkUrl = `${baseUrl}/${packageName}`;
+            const badgeUrl = `${baseUrl}/package/${packageName}.svg`;
+            const linkUrl = `${baseUrl}/package/${packageName}`;
             const codeContainer = document.getElementById('code-container');
 
             let code = '';
