@@ -20,6 +20,7 @@
 ## Сайт
 
 [litrosbadges.ru](https://litrosbadges.ru/)
+![litrosbadges.ru](img/litrosbadges-sample.png)
 
 ## Установка
 
