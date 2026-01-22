@@ -31,6 +31,8 @@ opm install litros
 
 ## Библиотека
 
+Для получения данных `GitHub` необходимо предварительно [сгенерировать токен](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-fine-grained-personal-access-token) в настройках вашего профиля.
+
 ### OneScript
 
 ```bsl
@@ -42,7 +44,7 @@ opm install litros
 
 ### OneScript + [Autumn](https://github.com/autumn-library/autumn)
 
-[Сгенерировать токен](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-fine-grained-personal-access-token) в настройках профиля `GitHub` и указать его в файле `autumn-properties.json` в корне вашего проекта:
+ Указать сгенерированный токен `GitHub` в файле `autumn-properties.json` в корне вашего проекта:
 ```bsl
 {
     "litros": {
