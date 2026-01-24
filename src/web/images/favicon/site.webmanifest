@@ -1,6 +1,10 @@
 {
   "name": "Litros",
   "short_name": "Litros",
+  "description": "Library Tracker for OneScript",
+  "author": "Alexander Osadchy, Dmitry Ivanov",
+  "homepage_url": "https://github.com/alei1180/litros",
+  "version": "1.0.0",
   "icons": [
     {
       "src": "/images/favicon.ico/web-app-manifest-192x192.png",
