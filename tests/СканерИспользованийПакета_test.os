@@ -18,6 +18,7 @@
 
 	// HttpBin
 	_HttpBin = Новый HttpBin(, 3434);
+	_HttpBin.УстановитьТаймаутЗапуска(20);
 	_HttpBin.УстановитьРасположениеКонтроллеров("./tests/fixtures/api-mocks");
 	_HttpBin.Запустить();
 		
