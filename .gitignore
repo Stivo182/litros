@@ -5,3 +5,4 @@ oscript_modules/
 
 # VS Code
 .vscode/
+**/.DS_Store
