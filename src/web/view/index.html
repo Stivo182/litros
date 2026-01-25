@@ -420,15 +420,8 @@
                 } else if (data.error) {
                     throw new Error(data.error);
                 } else {
-                    resultsDiv.innerHTML = `
-                        <div class="empty">
-                            ${
-                                data.message
-                                    ? `<h3>${data.message.replace(/\.(\s|$)/g, ".</br>")}</h3>`
-                                    : `<h3>Репозитории не найдены</strong></h3>`
-                            }
-                        </div>
-                    `;
+                    displayBadge(packageName);
+                    displayNotFound(data.message);
                 }
             } catch (error) {
                 resultsDiv.innerHTML = `
@@ -557,6 +550,19 @@
 
         function loadMore() {
             displayResults();
+        }
+
+        function displayNotFound(message) {
+            const resultsDiv = document.getElementById('results');
+            resultsDiv.innerHTML = `
+                <div class="empty">
+                    ${
+                        message
+                            ? `<h3>${message.replace(/\.(\s|$)/g, ".</br>")}</h3>`
+                            : `<h3>Репозитории не найдены</strong></h3>`
+                    }
+                </div>
+            `;
         }
 
         document.getElementById('packageInput').addEventListener('keypress', function(e) {
