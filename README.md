@@ -30,9 +30,9 @@ opm install litros
 
 ## Использование
 
-## Библиотека
+Для работы библиотеки `litros` требуется [сгенерировать](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-fine-grained-personal-access-token) персональный токен доступа GitHub (Personal Access Token) с областью прав `public_repo` (только чтение публичных репозиториев).
 
-Для получения данных `GitHub` необходимо предварительно [сгенерировать токен](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-fine-grained-personal-access-token) в настройках вашего профиля.
+## Библиотека
 
 ### OneScript
 
@@ -45,7 +45,10 @@ opm install litros
 
 ### OneScript + [Autumn](https://github.com/autumn-library/autumn)
 
-Создать файл `autumn-properties.json` в корне вашего проекта и указать в нем сгенерированный токен `GitHub`:
+Передайте `GitHub` токен одним из двух способов:
+- через переменную окружения `litros.ТокенGitHub=ВАШ-ТОКЕН`
+- или в файл `autumn-properties.json` (создайте его в корне проекта, если отсутствует) в секцию `litros`:
+
 ```json
 {
     "litros": {
@@ -53,6 +56,8 @@ opm install litros
     }
 }
 ```
+
+#### Пример использования в коде
 
 ```bsl
 #Использовать litros
@@ -100,7 +105,13 @@ opm install litros
 ```
 ## web приложение
 
-Создать файл с настройками `autumn-properties.json` в корне вашего проекта:
+### 1. Подготовка каталога
+
+Создайте отдельную папку для web-приложения
+
+### 2. Настройка конфигурации
+
+Внутри созданной папки создайте файл настроек `autumn-properties.json`:
 
 ```json
 {
@@ -112,16 +123,22 @@ opm install litros
         "СрокАктуальностиРепозитория": 604800
     }
 }
-
 ```
 
-Запуск приложения:
+Токен `GitHub` можно передать и через переменную окружения: `litros.ТокенGitHub=ВАШ-ТОКЕН`.
+
+### 3. Запуск приложения
+
+Перейдите в каталог приложения и выполните команду:
 
 ```shell
 litros run -p 3333
 ```
 
+**Параметры запуска:**
 * `-p` или `--port` - порт, на котором будет запущено приложение
+
+### 4. Доступ к приложению
 
 После запуска web приложение будет доступно по адресу:
 `http://127.0.0.1:3333`
