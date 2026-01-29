@@ -8,6 +8,7 @@
 <a href="https://github.com/alei1180/litros/releases/latest"><img alt="Last release" src="https://img.shields.io/github/v/release/alei1180/litros?include_prereleases&label=last%20release&style=badge"></a>
 <a href="https://sonar.openbsl.ru/dashboard?id=litros"><img alt="SonarQube: quality gate" src="https://sonar.openbsl.ru/api/project_badges/measure?project=litros&metric=alert_status&token=sqb_174d3352e142da6217583afe4bfbd7af29ee137d"></a>
 <a href="https://sonar.openbsl.ru/dashboard?id=litros"><img alt="SonarQube: coverage" src="https://sonar.openbsl.ru/api/project_badges/measure?project=litros&metric=coverage&token=sqb_174d3352e142da6217583afe4bfbd7af29ee137d"></a>
+<a href="https://litrosbadges.ru/package/litros"><img src="https://litrosbadges.ru/package/litros.svg" alt="Used by"></a>
 </p>
 
 ## Назначение
