@@ -1,0 +1,13 @@
+{
+    "diagnostics": {
+        "parameters": {
+            "IncorrectLineBreak": {
+                "listOfIncorrectFirstSymbol": ";|,\\s*\\S+"
+            },
+            "LatinAndCyrillicSymbolInWord": false,
+            "MagicNumber": {
+                "authorizedNumbers": "-1,0,1,2"
+            }
+        }
+    }
+}

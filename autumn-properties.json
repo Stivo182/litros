@@ -1,6 +1,8 @@
 {
     "litros": {
-        "ТокенGitHub": "",
+        "github": {
+            "Токен": ""
+        },
         "ИнтервалОбработкиОчереди": 60,
         "ИнтервалПроверкиАктуальности": 300,
         "СрокАктуальностиПакета": 86400,
@@ -12,7 +14,10 @@
     },
     "logos": {
         "logger": {
-            "rootLogger": {"level": "INFO", "appenders": "file, console"}
+            "rootLogger": {
+                "level": "INFO",
+                "appenders": "file, console"
+           }
         },
         "appender": {
             "file": {
