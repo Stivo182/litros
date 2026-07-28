@@ -4,6 +4,7 @@
 #Использовать entity
 #Использовать reflector
 #Использовать "../src/internal"
+#Использовать "../src/db"
 #Использовать "../src/repository"
 #Использовать "../src/dto"
 
