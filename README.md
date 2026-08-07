@@ -29,6 +29,9 @@
 opm install litros
 ```
 
+> **Ограничение совместимости:** приложение не поддерживает macOS на процессорах ARM (Apple Silicon),
+> поскольку используемая SQLite-зависимость не содержит нативной библиотеки для `osx-arm64`.
+
 ## Использование
 
 Для работы библиотеки `litros` требуется [сгенерировать](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-fine-grained-personal-access-token) персональный токен доступа GitHub (Personal Access Token) с областью прав `public_repo` (только чтение публичных репозиториев).

@@ -313,6 +313,7 @@
 	Элемент.Вставить("repository", Новый Соответствие());
 	Элемент["repository"]["html_url"] = "https://github.com/" + ПолноеИмя;
 	Элемент["repository"]["private"] = Ложь;
+	Элемент["repository"]["name"] = ИмяРепозитория;
 	Элемент["repository"]["full_name"] = ПолноеИмя;
 	Элемент["repository"]["owner"] = Новый Структура("login", "user");
 	Элемент["repository"]["fork"] = НастройкиТеста.ТолькоФорки;
